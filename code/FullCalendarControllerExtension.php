@@ -37,7 +37,7 @@ class FullCalendarControllerExtension extends Extension {
 		$start = $request->getVar('start');
 		$end   = $request->getVar('end');
 
-		$events = $this->owner->Events(null, $start, $end);
+		$events = $this->owner->data()->Events(null, $start, $end);
 		$result = array();
 
 		if ($events) foreach ($events as $event) {
