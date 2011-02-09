@@ -42,12 +42,13 @@ class FullCalendarControllerExtension extends Extension {
 
 		if ($events) foreach ($events as $event) {
 			$result[] = array(
-				'id'     => $event->ID,
-				'title'  => $event->EventTitle(),
-				'start'  => $event->getStartTimestamp(),
-				'end'    => $event->getEndTimestamp(),
-				'allDay' => (bool) $event->is_all_day,
-				'url'    => $event->Link());
+				'id'        => $event->ID,
+				'title'     => $event->EventTitle(),
+				'start'     => $event->getStartTimestamp(),
+				'end'       => $event->getEndTimestamp(),
+				'allDay'    => (bool) $event->is_all_day,
+				'url'       => $event->Link(),
+				'className' => $event->Event()->Parent()->ElementName());
 		}
 
 		$response = new SS_HTTPResponse(Convert::array2json($result));
