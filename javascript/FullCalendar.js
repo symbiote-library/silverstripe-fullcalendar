@@ -1,5 +1,13 @@
 ;(function($) {
-	$("#full-calendar").fullCalendar({
-		events: $("#full-calendar").attr("href")
+	$(document).ready(function(){
+
+		var calendar = $("#full-calendar");
+		
+		calendar.fullCalendar({
+			events: calendar.data("source"),
+			defaultView: calendar.data('view')
+		});
+
 	});
+	
 })(jQuery);
