@@ -16,7 +16,7 @@ class FullCalendarExtension extends DataExtension {
 	);
 
 	public function updateSettingsFields(FieldList $fields) {
-		$fields->addFieldToTab('Root.Settings', CheckboxField::create('UseFullCalendar', _t('FullCalendarExtension.DISPLAYINFULLLAYOUT', 'Display in a full calendar layout?')));
+		$fields->addFieldToTab('Root.Settings', CheckboxField::create('UseFullCalendar', _t('FullCalendarExtension.DisplayInFullLayout', 'Display in a full calendar layout?')));
 	}
 
 }
