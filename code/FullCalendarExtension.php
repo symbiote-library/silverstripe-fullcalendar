@@ -7,11 +7,11 @@
  */
 class FullCalendarExtension extends DataExtension {
 
-	static public $db = array(
+	public static $db = array(
 		'UseFullCalendar' => 'Boolean'
 	);
 	
-	static public $defaults = array(
+	public static $defaults = array(
 		'UseFullCalendar' => 1
 	);
 
