@@ -5,21 +5,18 @@
  *
  * @package silverstripe-fullcalendar
  */
-class FullCalendarExtension extends DataObjectDecorator {
+class FullCalendarExtension extends DataExtension {
 
-	public function extraStatics() {
-		return array(
-			'db'       => array('UseFullCalendar' => 'Boolean'),
-			'defaults' => array('UseFullCalendar' => true)
-		);
-	}
+	public static $db = array(
+		'UseFullCalendar' => 'Boolean'
+	);
+	
+	public static $defaults = array(
+		'UseFullCalendar' => 1
+	);
 
-	public function updateCMSFields($fields) {
-		$check = new CheckboxField(
-			'UseFullCalendar',
-			_t('FullCalendar.DISPLAYINFULLLAYOUT', 'Display in a full calendar layout?')
-		);
-		$fields->addFieldToTab('Root.Behaviour', $check, 'ShowInMenus');
+	public function updateSettingsFields(FieldList $fields) {
+		$fields->addFieldToTab('Root.Settings', CheckboxField::create('UseFullCalendar', _t('FullCalendarExtension.DisplayInFullLayout', 'Display in a full calendar layout?')));
 	}
 
 }
