@@ -7,8 +7,8 @@ render the initial calendar view using the jquery fullcalendar plugin.
 *  Andrew Short (<andrew@silverstripe.com.au>)
 
 ## Requirements
-*  SilverStripe 2.4+
-*  The [Event Calendar Module](http://silverstripe.org/event-calendar)
+*  SilverStripe 3.1+
+*  The [Event Calendar Module](https://github.com/unclecheese/silverstripe-event-calendar)
 
 ## Installation
 
