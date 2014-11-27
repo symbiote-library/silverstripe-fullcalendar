@@ -4,7 +4,7 @@ This is a simple module that builds on the event calendar module to allow you to
 render the initial calendar view using the jquery fullcalendar plugin.
 
 ## Maintainer Contacts
-*  Andrew Short (<andrew@silverstripe.com.au>)
+*  Marcus Nyeholt (<marcus@silverstripe.com.au>)
 
 ## Requirements
 *  SilverStripe 3.1+
