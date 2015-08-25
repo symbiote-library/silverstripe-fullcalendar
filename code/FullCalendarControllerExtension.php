@@ -79,7 +79,7 @@ class FullCalendarControllerExtension extends Extension {
     if ($events) foreach ($events as $event) {
         $result[] = array(
           'id'        => $event->ID,
-          'title'     => $event->getTitle(),
+          'title'     => $event->Event()->Title,
 /*
           'start'     => strtotime("$event->StartDate $event->StartTime"),
           'end'       => strtotime("$event->EndDate $event->EndTime"),
