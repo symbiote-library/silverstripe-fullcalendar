@@ -81,7 +81,22 @@ class FullCalendarControllerExtension extends Extension {
           'url'       => $event->Link(),
         );
 		
-		if(!$eventArray['allDay']) $eventArray['end'] = $event->MicroformatEnd();
+		//We work out the end data manually here as all day events can run over multiple days but CalendarDateTime,
+		//always returns Start + 24 hours when AllDay is true.
+		$date = $event->EndDate ? $event->EndDate : $event->StartDate;
+		/*
+		 * @TODO Test to see if this readable snippet is 1:1 with the below
+		 * if($event->EndTime) {
+		 * 	$time = $event->EndTime;
+		 * } elseif($event->StartTime) {
+		 * 	$time = $event->StartTime;
+		 * } else {
+		 * 	$time = "00:00:00";
+		 * }
+		 */
+		$time = $event->EndTime && $event->StartTime ? $event->EndTime : (!$event->EndTime && $event->StartTime	? $event->StartTime	: "00:00:00");
+
+		$eventArray['end'] = CalendarUtil::microformat($date, $time, Config::inst()->get('CalendarDateTime', 'offset'));
         
 		$eventsArray[] = $eventArray;
       }
