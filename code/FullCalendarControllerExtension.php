@@ -17,7 +17,8 @@ class FullCalendarControllerExtension extends Extension {
     $request = $this->owner->getRequest();
 
     if(!$request->param('Action') && $this->owner->data()->UseFullCalendar){
-      return $this->owner->redirect($this->owner->Link('full'));
+      
+		return $this->owner->redirect($this->owner->Link('full'));
     }
   }
 
@@ -27,12 +28,9 @@ class FullCalendarControllerExtension extends Extension {
   public function full() {
 
     Requirements::javascript(THIRDPARTY_DIR . '/jquery/jquery.js');
-
     Requirements::javascript('fullcalendar/thirdparty/fullcalendar-2.3.1/lib/moment.min.js');
     Requirements::javascript('fullcalendar/thirdparty/fullcalendar-2.3.1/fullcalendar.min.js');
-
     Requirements::javascript('fullcalendar/javascript/FullCalendar.js');
-
     Requirements::css('fullcalendar/thirdparty/fullcalendar-2.3.1/fullcalendar.min.css');
 
     $basicAgenda = 'agenda';
@@ -47,6 +45,7 @@ class FullCalendarControllerExtension extends Extension {
       $view = 'month';
       break;
     }
+	
     return $this->owner->customise(array(
         'FullCalendarView' => $view
       ));
@@ -62,11 +61,6 @@ class FullCalendarControllerExtension extends Extension {
     $start = $request->getVar('start');
     $end   = $request->getVar('end');
 
-    // for testing
-    if(!$end){
-      $end = '2015-12-12';
-    }
-
     $events = $this->owner->data()->getEventList(
       sfDate::getInstance($start)->date(),
       sfDate::getInstance($end)->date(),
@@ -74,35 +68,43 @@ class FullCalendarControllerExtension extends Extension {
       null
     );
 
-    $result = array();
+    $eventsArray = array();
 
     if ($events) foreach ($events as $event) {
-        $result[] = array(
+        $eventArray = array(
           'id'        => $event->ID,
           'title'     => $event->Event()->Title,
-/*
-          'start'     => strtotime("$event->StartDate $event->StartTime"),
-          'end'       => strtotime("$event->EndDate $event->EndTime"),
-*/
           'start'     => $event->MicroformatStart(),
-          'end'       => $event->MicroformatEnd(),
           'startTime' => $event->getFormattedStartTime(),
           'endTime'   => $event->getFormattedEndTime(),
           'allDay'    => (bool) $event->AllDay,
           'url'       => $event->Link(),
-          //'className' => $event->Event()->Parent()->ElementName());
         );
+		
+		//We work out the end data manually here as all day events can run over multiple days but CalendarDateTime,
+		//always returns Start + 24 hours when AllDay is true.
+		$date = $event->EndDate ? $event->EndDate : $event->StartDate;
+		/*
+		 * @TODO Test to see if this readable snippet is 1:1 with the below
+		 * if($event->EndTime) {
+		 * 	$time = $event->EndTime;
+		 * } elseif($event->StartTime) {
+		 * 	$time = $event->StartTime;
+		 * } else {
+		 * 	$time = "00:00:00";
+		 * }
+		 */
+		$time = $event->EndTime && $event->StartTime ? $event->EndTime : (!$event->EndTime && $event->StartTime	? $event->StartTime	: "00:00:00");
+
+		$eventArray['end'] = CalendarUtil::microformat($date, $time, Config::inst()->get('CalendarDateTime', 'offset'));
+        
+		$eventsArray[] = $eventArray;
       }
 
-/*
-    $this->owner->getRequest()->addHeader('Content-Type', 'application/json');
-    return Convert::array2json($result);
-*/
-
-    $response = new SS_HTTPResponse(Convert::array2json($result));
+    $response = new SS_HTTPResponse(Convert::array2json($eventsArray));
     $response->addHeader('Content-Type', 'application/json');
-    return $response;
-
+    
+	return $response;
   }
 
 }
