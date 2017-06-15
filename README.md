@@ -1,3 +1,7 @@
+> ## **IMPORTANT**
+
+> This module is no longer actively maintained, however, if you're interested in adopting it, please let us know!
+
 # SilverStripe Full Calendar Module
 
 This is a simple module that builds on the event calendar module to allow you to
