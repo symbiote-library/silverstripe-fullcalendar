@@ -1,5 +1,5 @@
 {
-	"name": "silverstripe-australia/fullcalendar",
+	"name": "symbiote-library/silverstripe-fullcalendar",
 	"description": "An extension to the Event Calendar module to render the calendar using the jQuery Full Calendar plugin",
 	"type": "silverstripe-module",
 	"keywords": ["silverstripe", "event", "calendar", "fullcalendar"],
@@ -16,6 +16,9 @@
 		"unclecheese/eventcalendar": "~1.0"
 	},
 	"extra": {
-		"installer-name": "fullcalendar"
+		"installer-name": "fullcalendar",
+		"branch-alias": {
+			"dev-master": "1.0.x-dev"
+		}
 	}
 }
